@@ -9,37 +9,37 @@ import json
 import time
 import datetime
 
-APIKEY = '1FHP56uxeFRdnpx7m2XAgaHpCtI='  #ÄãµÄAPIKEY
-ser = serial.Serial("/dev/ttyAMA0", 115200)  # Î»ÖÃ1
-ser.flushInput()  # Î»ÖÃ2
-ser.write("begin".encode("utf-8"))  # Î»ÖÃ3
+APIKEY = '1FHP56uxeFRdnpx7m2XAgaHpCtI='  #ä½ çš„APIKEY
+ser = serial.Serial("/dev/ttyAMA0", 115200)  # ä½ç½®1
+ser.flushInput()  # ä½ç½®2
+ser.write("begin".encode("utf-8"))  # ä½ç½®3
 
 def serialop():
     while True:
         sum = 0
-        count = ser.inWaiting()  # Î»ÖÃ4
+        count = ser.inWaiting()  # ä½ç½®4
         if count != 0:
-            ser.write(str(count))  # Î»ÖÃ7
-            ser.write("Recv some data is : ".encode("utf-8"))  # Î»ÖÃ6
-            recv = ser.read(count)  # Î»ÖÃ
-            #ser.write(str(recv))  # Î»ÖÃ7
+            ser.write(str(count))  # ä½ç½®7
+            ser.write("Recv some data is : ".encode("utf-8"))  # ä½ç½®6
+            recv = ser.read(count)  # ä½ç½®
+            #ser.write(str(recv))  # ä½ç½®7
             sum = int(recv)
             ser.write(recv)
             ser.write(str(sum)[0:3])
             ser.write("\n")
             ser.flushInput()
-        time.sleep(0.1)  # Î»ÖÃ8
+        time.sleep(0.1)  # ä½ç½®8
 
 def get_temp():
-        # ´ò¿ªÎÄ¼ş 
+        # æ‰“å¼€æ–‡ä»¶ 
         file = open("/sys/class/thermal/thermal_zone0/temp") 
-        # ¶ÁÈ¡½á¹û£¬²¢×ª»»Îª¸¡µãÊı 
+        # è¯»å–ç»“æœï¼Œå¹¶è½¬æ¢ä¸ºæµ®ç‚¹æ•° 
         temp = float(file.read()) / 1000 
-        # ¹Ø±ÕÎÄ¼ş 
+        # å…³é—­æ–‡ä»¶ 
         file.close() 
-        # Ïò¿ØÖÆÌ¨´òÓ¡½á¹û 
+        # å‘æ§åˆ¶å°æ‰“å°ç»“æœ 
         print("CPU tempurature: %.3f" %temp )
-        # ·µ»ØÎÂ¶ÈÖµ
+        # è¿”å›æ¸©åº¦å€¼
         return temp
 
         
@@ -47,8 +47,8 @@ def get_temp():
 def http_put():
         temperature= get_temp()
         CurTime = datetime.datetime.now()
-        url='http://api.heclouds.com/devices/595562605/datapoints'  #ÄãµÄÉè±¸id
-        values={'datastreams':[{"id":"temp","datapoints":[{"value":temperature}]}]}#ÄãµÄÊı¾İÁ÷Ãû³Æ
+        url='http://api.heclouds.com/devices/595562605/datapoints'  #ä½ çš„è®¾å¤‡id
+        values={'datastreams':[{"id":"temp","datapoints":[{"value":temperature}]}]}#ä½ çš„æ•°æ®æµåç§°
         print ("Cur_time:%s" %CurTime.isoformat())
         print ("tempure:%.3f" %temperature)
         jdata = json.dumps(values)
