@@ -9,10 +9,10 @@ import json
 import time
 import datetime
 
-APIKEY = '1FHP56uxeFRdnpx7m2XAgaHpCtI='  #ÄãµÄAPIKEY
-ser = serial.Serial("/dev/ttyAMA0", 115200)  # Î»ÖÃ1
-ser.flushInput()  # Î»ÖÃ2
-ser.write("begin".encode("utf-8"))  # Î»ÖÃ3
+APIKEY = '1FHP56uxeFRdnpx7m2XAgaHpCtI='  #ä½ çš„APIKEY
+ser = serial.Serial("/dev/ttyAMA0", 115200)  # ä½ç½®1
+ser.flushInput()  # ä½ç½®2
+ser.write("begin".encode("utf-8"))  # ä½ç½®3
 
         
 def http_put():
@@ -20,8 +20,8 @@ def http_put():
     #print ("tempure:%.3s" %temperature)
     temperature = float(temperature)  
     CurTime = datetime.datetime.now()
-    url='http://api.heclouds.com/devices/595562605/datapoints'  #ÄãµÄÉè±¸id
-    values={'datastreams':[{"id":"temp","datapoints":[{"value":temperature}]}]}#ÄãµÄÊı¾İÁ÷Ãû³Æ
+    url='http://api.heclouds.com/devices/595562605/datapoints'  #ä½ çš„è®¾å¤‡id
+    values={'datastreams':[{"id":"temp","datapoints":[{"value":temperature}]}]}#ä½ çš„æ•°æ®æµåç§°
     print ("Cur_time:%s" %CurTime.isoformat())
     print ("temperature:%.3f" %temperature)
     jdata = json.dumps(values)
@@ -36,8 +36,8 @@ def http_put2():
     humidity = recv[5:7]
     humidity = int(humidity)  
     CurTime = datetime.datetime.now()
-    url='http://api.heclouds.com/devices/595562605/datapoints'  #ÄãµÄÉè±¸id
-    values={'datastreams':[{"id":"hum","datapoints":[{"value":humidity}]}]}#ÄãµÄÊı¾İÁ÷Ãû³Æ
+    url='http://api.heclouds.com/devices/595562605/datapoints'  #ä½ çš„è®¾å¤‡id
+    values={'datastreams':[{"id":"hum","datapoints":[{"value":humidity}]}]}#ä½ çš„æ•°æ®æµåç§°
     print ("Cur_time:%s" %CurTime.isoformat())
     print ("humidity:%.0f" %humidity)
     jdata = json.dumps(values)
@@ -49,9 +49,9 @@ def http_put2():
     return request.read()
 while True:
     sum = 0
-    count = ser.inWaiting()  # Î»ÖÃ4
+    count = ser.inWaiting()  # ä½ç½®4
     if count != 0:
-        recv = ser.read(count)  # Î»ÖÃ
+        recv = ser.read(count)  # ä½ç½®
         
         time.sleep(1)
         resp = http_put()
